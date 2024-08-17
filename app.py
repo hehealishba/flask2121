@@ -2,6 +2,7 @@ from flask import Flask, request, render_template_string
 from werkzeug.utils import secure_filename
 import io
 import logging
+import os 
 
 app = Flask(__name__)
 
@@ -38,7 +39,8 @@ def upload_file():
         logger.info("File processed successfully")
         return result
 
-if __name__ == '__main__':
-    print("Server is starting...")
-    logger.info("Server is running. Ready to handle requests.")
-    app.run(port=8080,debug=True)
+
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
