@@ -21,6 +21,7 @@ def index():
     with open('templates/test.html', 'r') as f:
         return render_template_string(f.read())
 
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
