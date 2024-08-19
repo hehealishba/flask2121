@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template_string
 from werkzeug.utils import secure_filename
+import pdfplumber
 import io
 import logging
-import os 
 
 app = Flask(__name__)
 
@@ -10,17 +10,22 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# This is a placeholder for Neeruj's script
+# Function to process the PDF file using pdfplumber
 def process_file(file_content):
-    # Replace this with the actual processing logic
-    logger.info(f"Processing file of size {len(file_content)} bytes")
-    return f"Processed file content: {file_content[:100]}..."
+    with pdfplumber.open(io.BytesIO(file_content)) as pdf:
+        extracted_text = []
+        for page in pdf.pages:
+            # Extract text with layout preservation
+            text = page.extract_text(layout=True)
+            if text:
+                extracted_text.append(text)
+        full_text = "\n\n".join(extracted_text)
+    return f"Extracted PDF content:\n{full_text}"
 
 @app.route('/', methods=['GET'])
 def index():
     with open('templates/test.html', 'r') as f:
         return render_template_string(f.read())
-
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -40,8 +45,8 @@ def upload_file():
         logger.info("File processed successfully")
         return result
 
-
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
+
