@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Upload and Process</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>File Upload and Download</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -32,6 +31,7 @@
         form {
             display: flex;
             flex-direction: column;
+            margin-bottom: 2rem;
         }
         .file-input-wrapper {
             position: relative;
@@ -69,6 +69,7 @@
             cursor: pointer;
             font-size: 1rem;
             transition: background-color 0.3s;
+            margin-bottom: 0.5rem;
         }
         button:hover {
             background-color: #45a049;
@@ -87,16 +88,6 @@
             text-align: center;
             margin-top: 1rem;
         }
-        .loading:after {
-            content: '...';
-            animation: dots 1.5s steps(5, end) infinite;
-        }
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60% { content: '...'; }
-            80%, 100% { content: ''; }
-        }
     </style>
 </head>
 <body>
@@ -110,8 +101,15 @@
             </div>
             <button type="submit">Upload and Process</button>
         </form>
-        <div id="loading" class="loading">Processing</div>
+        <div id="loading" class="loading">Processing...</div>
         <div id="results"></div>
+
+        <h2>Download Sample PDFs:</h2>
+        <button onclick="window.location.href='/download/sample1.pdf'">Sample 1</button>
+        <button onclick="window.location.href='/download/sample2.pdf'">Sample 2</button>
+        <button onclick="window.location.href='/download/sample3.pdf'">Sample 3</button>
+        <button onclick="window.location.href='/download/sample4.pdf'">Sample 4</button>
+        <button onclick="window.location.href='/download/sample5.pdf'">Sample 5</button>
     </div>
 
     <script>

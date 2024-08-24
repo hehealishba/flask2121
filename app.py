@@ -1,8 +1,10 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template_string, send_from_directory
 from werkzeug.utils import secure_filename
 import pdfplumber
 import io
 import logging
+import os
+from redact import redact_pdf  # Import the redact_pdf function from redact.py
 
 app = Flask(__name__)
 
@@ -27,6 +29,13 @@ def index():
     with open('templates/test.html', 'r') as f:
         return render_template_string(f.read())
 
+# Route for downloading PDFs
+@app.route('/download/<filename>', methods=['GET'])
+def download_file(filename):
+    # Serve the file from the 'pdfs' directory
+    return send_from_directory('pdfs', filename)
+
+# Route for uploading a file and processing it
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -45,8 +54,21 @@ def upload_file():
         logger.info("File processed successfully")
         return result
 
+# Route to handle redaction of PDFs
+@app.route('/redact/<filename>', methods=['GET'])
+def redact(filename):
+    # Example redactions, adjust coordinates and page numbers as needed
+    redactions = [
+        {"page": 0, "coordinates": (100, 100, 200, 50)},  # Example coordinates for redaction
+    ]
+    input_pdf = os.path.join('pdfs', f"{filename}.pdf")
+    output_pdf = os.path.join('pdfs', f"{filename}_redacted.pdf")
+    
+    # Perform the redaction
+    redact_pdf(input_pdf, output_pdf, redactions)
+    
+    return f"Redaction completed for {filename}.pdf. Download the redacted file <a href='/download/{filename}_redacted.pdf'>here</a>."
+
 if __name__ == "__main__":
-    import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
-
