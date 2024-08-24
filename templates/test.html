@@ -22,10 +22,19 @@
             padding: 2rem;
             width: 100%;
             max-width: 500px;
+            text-align: center; /* Center text and images */
+        }
+        .container img {
+            max-width: 100px; /* Adjust the size as needed */
+            margin-bottom: 0.5rem; /* Space between logo and tagline */
+        }
+        .tagline {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1.5rem; /* Space between tagline and heading */
         }
         h1 {
             color: #333;
-            text-align: center;
             margin-bottom: 1.5rem;
         }
         form {
@@ -92,6 +101,8 @@
 </head>
 <body>
     <div class="container">
+        <img src="static/logo.png" alt="Logo">
+        <p class="tagline">Autonomous AI Agent for Insurance</p> <!-- Add this line -->
         <h1>File Upload and Process</h1>
         <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
             <div class="file-input-wrapper">
