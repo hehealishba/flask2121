@@ -93,7 +93,7 @@
 <body>
     <div class="container">
         <h1>File Upload and Process</h1>
-        <form id="upload-form">
+        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
             <div class="file-input-wrapper">
                 <input type="file" id="file-input" class="file-input" name="file" required>
                 <label for="file-input" class="file-input-label">Choose File</label>
