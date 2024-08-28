@@ -55,7 +55,15 @@ def upload_file():
         filename = secure_filename(file.filename)
         logger.info(f"Received file: {filename}")
         file_content = file.read()
-        result = process_file(file_content)
+
+        # Call Neeraj's model
+        # Import pipeline_test.py
+        # Call function with input = file_content
+        # store result 
+
+        result = call_neerajs_model(file_content)
+        # result = process_file(file_content)
+
         logger.info("File processed successfully")
         return result
 
@@ -76,5 +84,5 @@ def redact(filename):
         return 'Error during redaction', 500
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 3100))
     app.run(host="0.0.0.0", port=port, debug=True)
