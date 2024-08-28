@@ -1,4 +1,5 @@
 from io import BytesIO
+from config import ANTHROPIC_API_KEY as CONFIG_API_KEY
 import anthropic
 import json
 import re
@@ -11,10 +12,6 @@ from PyPDF2 import PdfReader
 from pdf2image import convert_from_path
 import pytesseract
 from io import BytesIO
-
-
-CONFIG_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-
 
 # class PdfInput:
 #     def __init__(self, file_path=None):

@@ -13,9 +13,6 @@ import pytesseract
 from io import BytesIO
 
 
-CONFIG_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-
-
 # class PdfInput:
 #     def __init__(self, file_path=None):
 #         self.file_path = file_path

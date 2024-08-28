@@ -1,11 +1,8 @@
 import anthropic
 import re
 import json
+from config import ANTHROPIC_API_KEY as CONFIG_API_KEY
 from PyPDF2 import PdfReader
-
-
-CONFIG_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-
 
 def call_claude_api(text, prompt, api_key):
     client = anthropic.Client(api_key=api_key)
