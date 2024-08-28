@@ -64,7 +64,6 @@ def upload_file():
         with open(pdf_file_path, 'wb') as f:
             f.write(file_content)
         pipeline.main(pdf_file_path)    
-        result = f"Pipeline executed for {filename}." 
 
 
         # Call Neeraj's model

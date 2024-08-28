@@ -5,7 +5,8 @@ import io
 import logging
 import os
 from redact import redact_pdf 
-import pipeline
+from pipeline import 
+
 
 app = Flask(__name__, template_folder='templates')  
 
@@ -56,16 +57,6 @@ def upload_file():
         filename = secure_filename(file.filename)
         logger.info(f"Received file: {filename}")
         file_content = file.read()
-
-
-
-
-        pdf_file_path = os.path.join('/tmp', filename)
-        with open(pdf_file_path, 'wb') as f:
-            f.write(file_content)
-        pipeline.main(pdf_file_path)    
-        result = f"Pipeline executed for {filename}." 
-
 
         # Call Neeraj's model
         # Import pipeline_test.py

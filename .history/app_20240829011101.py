@@ -57,16 +57,6 @@ def upload_file():
         logger.info(f"Received file: {filename}")
         file_content = file.read()
 
-
-
-
-        pdf_file_path = os.path.join('/tmp', filename)
-        with open(pdf_file_path, 'wb') as f:
-            f.write(file_content)
-        pipeline.main(pdf_file_path)    
-        result = f"Pipeline executed for {filename}." 
-
-
         # Call Neeraj's model
         # Import pipeline_test.py
         # Call function with input = file_content
