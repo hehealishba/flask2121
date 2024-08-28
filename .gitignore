@@ -1,0 +1,27 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Environment files
+.env
+
+# Config files
+config.py
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# Heroku
+*.env

@@ -5,9 +5,9 @@ import io
 import logging
 import os
 from redact import redact_pdf 
-import pipeline
+import pipeline  # Importing pipeline module
 
-app = Flask(__name__, template_folder='templates')  
+app = Flask(__name__, template_folder='templates')
 
 # Enable template auto-reloading
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -48,32 +48,32 @@ def upload_file():
     if 'file' not in request.files:
         logger.warning("No file part in the request")
         return 'No file part', 400
+    
     file = request.files['file']
     if file.filename == '':
         logger.warning("No selected file")
         return 'No selected file', 400
+    
     if file:
         filename = secure_filename(file.filename)
         logger.info(f"Received file: {filename}")
         file_content = file.read()
 
-
-
-
+        # Save the file content to a temporary location
         pdf_file_path = os.path.join('/tmp', filename)
         with open(pdf_file_path, 'wb') as f:
             f.write(file_content)
-        pipeline.main(pdf_file_path)    
-        result = f"Pipeline executed for {filename}." 
+        
+        try:
+            # Call the pipeline function
+            pipeline.main(pdf_file_path)    
+            result = f"Pipeline executed for {filename}."
+        except Exception as e:
+            logger.error(f"Error executing pipeline: {e}")
+            return f"Error executing pipeline: {e}", 500
 
-
-        # Call Neeraj's model
-        # Import pipeline_test.py
-        # Call function with input = file_content
-        # store result 
-
-        result = call_neerajs_model(file_content)
-        # result = process_file(file_content)
+        # Uncomment if you have this function defined
+        # result = call_neerajs_model(file_content)
 
         logger.info("File processed successfully")
         return result

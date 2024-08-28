@@ -10,9 +10,25 @@ from components.pricing_module import PricingModel
 from components.gap_module import GapAnalysis
 import config  # Import the config module
 import pytesseract
+import logging
+import os
+import config 
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Use the API key from config
-api_key = config.ANTHROPIC_API_KEY
+api_key = getattr(config, "ANTHROPIC_API_KEY", None)
+if not api_key:
+    logger.info("Config ANTHROPIC_API_KEY not found, falling back to environment variable.")
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+
+if not api_key:
+    logger.error("ANTHROPIC_API_KEY is not set in both config and environment variables.")
+    sys.exit(1)  
+
+
 
 # Example function using pytesseract
 def example_function(image_path_or_data):
@@ -49,9 +65,9 @@ def main(pdf_file_path=None):
         # Step 9: Gap Analysis & Discount Suggestion
         final_output = GapAnalysis(pricing_output, quote_priority).execute()
 
-        print("Pipeline execution completed. Final output:", final_output)
+        logger.info("Pipeline execution completed. Final output: %s", final_output)
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logger.error(f"An error occurred during pipeline execution: {e}")
 
 if __name__ == "__main__":
     main()
